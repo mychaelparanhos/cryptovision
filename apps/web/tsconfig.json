@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@cryptovision/shared": ["../../packages/shared/src"],
+      "@cryptovision/shared/*": ["../../packages/shared/src/*"]
     }
   },
   "include": [
