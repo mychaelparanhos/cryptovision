@@ -8,6 +8,12 @@ importers:
 
   .:
     devDependencies:
+      drizzle-kit:
+        specifier: ^0.31.10
+        version: 0.31.10
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
       turbo:
         specifier: ^2
         version: 2.9.6
