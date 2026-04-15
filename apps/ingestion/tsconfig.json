@@ -1,11 +1,21 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
+    "target": "ES2022",
+    "lib": ["ES2022"],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "target": "ES2022"
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "outDir": "dist",
+    "declaration": true,
+    "paths": {
+      "@cryptovision/shared": ["../../packages/shared/src"],
+      "@cryptovision/shared/*": ["../../packages/shared/src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
