@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* CryptoVision Design System Tokens */
+:root {
+  /* Surfaces */
+  --bg: #09090B;
+  --surface: #18181B;
+  --surface-hover: #1F1F23;
+  --border: #27272A;
+  --border-hover: #3F3F46;
+
+  /* Text */
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+
+  /* Accents */
+  --accent-amber: #F59E0B;
+  --accent-amber-hover: #D97706;
+  --accent-amber-glow: rgba(245, 158, 11, 0.15);
+  --accent-amber-subtle: rgba(245, 158, 11, 0.08);
+  --accent-blue: #3B82F6;
+  --accent-blue-hover: #2563EB;
+
+  /* Semantic */
+  --positive: #22C55E;
+  --positive-bg: rgba(34, 197, 94, 0.12);
+  --negative: #EF4444;
+  --negative-bg: rgba(239, 68, 68, 0.12);
+  --warning: #F59E0B;
+  --info: #3B82F6;
+
+  /* Exchange Colors */
+  --exchange-binance: #F0B90B;
+  --exchange-bybit: #F7A600;
+  --exchange-okx: #FFFFFF;
+
+  /* Tailwind integration */
+  --background: var(--bg);
+  --foreground: var(--text-primary);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-amber-hover: var(--accent-amber-hover);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-hover: var(--accent-blue-hover);
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-exchange-binance: var(--exchange-binance);
+  --color-exchange-bybit: var(--exchange-bybit);
+  --color-exchange-okx: var(--exchange-okx);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Data number styling */
+.font-data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Number flash animations */
+@keyframes flash-green {
+  0% { background-color: var(--positive-bg); }
+  100% { background-color: transparent; }
+}
+@keyframes flash-red {
+  0% { background-color: var(--negative-bg); }
+  100% { background-color: transparent; }
+}
+.num-flash-up { animation: flash-green 0.8s ease-out; }
+.num-flash-down { animation: flash-red 0.8s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .num-flash-up, .num-flash-down {
+    animation: none;
+  }
+}
