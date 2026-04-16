@@ -3,7 +3,7 @@
 Last updated: 2026-04-15
 
 ## 🎯 Current Task
-Sprint 0 + Sprint 1 COMPLETOS. Aguardando deploy Vercel + lançamento para validation gate (300+ waitlist signups em 14 dias).
+Sprint 2 Expandida iniciando. CEO mudou estratégia: de "validation gate 300 signups" para "comercialmente vendável desde o dia 1". 3 partes: A (Free Tier Robusto) → B (Ciclo de Venda) → C (Entrega do Valor Pago). Briefing em docs/briefings/cryptovision/BRIEFING-Sprint2-Expandida.md. Próximo: @pm atualizar PRD → @architect validar novos componentes → /plan-eng-review → @sm stories → @dev implementar.
 
 ## ✅ Reviews Concluídos
 | Review | Status | Detalhes |
