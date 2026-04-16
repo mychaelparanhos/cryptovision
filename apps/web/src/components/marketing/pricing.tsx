@@ -201,7 +201,7 @@ export function Pricing() {
 
                 <Link
                   href={tier.tier === "Enterprise" ? "/contact" : "/signup"}
-                  className={`mt-6 block rounded-lg px-4 py-2.5 text-center text-sm font-semibold transition-colors ${
+                  className={`mt-6 flex min-h-[42px] items-center justify-center rounded-lg px-4 py-2.5 text-center text-sm font-semibold whitespace-nowrap transition-colors ${
                     tier.ctaStyle === "primary"
                       ? "bg-[var(--accent-amber)] text-[var(--bg)] hover:bg-[var(--accent-amber-hover)]"
                       : "border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--surface-hover)]"

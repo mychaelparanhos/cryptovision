@@ -2,6 +2,9 @@ export function Features() {
   return (
     <section id="features" className="px-6 py-20">
       <div className="mx-auto max-w-7xl">
+        <h2 className="mb-10 text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
+          Data that answers WHY, not just WHAT.
+        </h2>
         <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
           {/* Large feature — Heatmap */}
           <div className="overflow-hidden rounded-xl border border-[var(--border)]">
