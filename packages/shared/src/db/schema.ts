@@ -56,6 +56,8 @@ export const users = pgTable("users", {
   stripeCustomerId: text("stripe_customer_id").unique(),
   stripeSubscriptionId: text("stripe_subscription_id"),
   onboardingCompleted: boolean("onboarding_completed").default(false),
+  referralCode: text("referral_code").unique(),
+  referredBy: text("referred_by"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

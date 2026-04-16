@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
   { href: "#heatmap", label: "Heatmap", scroll: true },
@@ -12,7 +15,26 @@ const NAV_LINKS = [
 ];
 
 export function Navbar() {
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+      setLoading(false);
+    });
+  }, []);
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push("/");
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
@@ -50,12 +72,36 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link
-            href="/login"
-            className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-          >
-            Log in
-          </Link>
+          {!loading && (
+            <>
+              {user ? (
+                <div className="hidden items-center gap-4 md:flex">
+                  <span className="text-sm text-[var(--text-secondary)] truncate max-w-[160px]">
+                    {user.email}
+                  </span>
+                  <Link
+                    href="/dashboard"
+                    className="text-sm font-medium text-[var(--accent-amber)] hover:underline transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="hidden text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors md:block"
+                >
+                  Log in
+                </Link>
+              )}
+            </>
+          )}
 
           {/* Mobile hamburger */}
           <button
@@ -105,6 +151,43 @@ export function Navbar() {
                 {link.label}
               </Link>
             )
+          )}
+
+          {/* Mobile auth section */}
+          {!loading && (
+            <div className="border-t border-[var(--border)] pt-3 mt-3 space-y-3">
+              {user ? (
+                <>
+                  <span className="block text-sm text-[var(--text-secondary)] truncate">
+                    {user.email}
+                  </span>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setMobileOpen(false)}
+                    className="block text-sm font-medium text-[var(--accent-amber)] hover:underline"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setMobileOpen(false);
+                      handleLogout();
+                    }}
+                    className="block text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                >
+                  Log in
+                </Link>
+              )}
+            </div>
           )}
         </div>
       )}

@@ -9,6 +9,8 @@ export interface User {
   stripeCustomerId: string | null;
   stripeSubscriptionId: string | null;
   onboardingCompleted: boolean;
+  referralCode: string | null;
+  referredBy: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
