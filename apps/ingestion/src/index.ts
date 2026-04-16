@@ -12,6 +12,8 @@ if (process.env.SENTRY_DSN) {
 
 import { SUPPORTED_SYMBOLS } from "@cryptovision/shared";
 import { BinanceAdapter } from "./adapters/binance";
+import { BybitAdapter } from "./adapters/bybit";
+import { OKXAdapter } from "./adapters/okx";
 import { Orchestrator } from "./services/orchestrator";
 import { logger } from "./utils/logger";
 
@@ -42,14 +44,19 @@ const orchestrator = new Orchestrator({
 });
 
 const binance = new BinanceAdapter();
+const bybit = new BybitAdapter();
+const okx = new OKXAdapter();
+
 orchestrator.addAdapter(binance);
+orchestrator.addAdapter(bybit);
+orchestrator.addAdapter(okx);
 
 // ─── Start ──────────────────────────────────────────────────
 
 async function main() {
   logger.info("Main", "CryptoVision Ingestion Worker starting...");
   logger.info("Main", `PID: ${process.pid} | Node: ${process.version}`);
-  logger.info("Main", `Symbols: ${symbols.length} | Adapters: Binance`);
+  logger.info("Main", `Symbols: ${symbols.length} | Adapters: Binance, Bybit, OKX`);
 
   await orchestrator.start();
 

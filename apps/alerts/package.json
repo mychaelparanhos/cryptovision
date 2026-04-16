@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@cryptovision/shared": "workspace:*",
-    "@sentry/node": "^10.49.0"
+    "@sentry/node": "^10.49.0",
+    "@upstash/redis": "^1.37.0"
   },
   "devDependencies": {
     "@types/node": "^22",
