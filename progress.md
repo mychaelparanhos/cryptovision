@@ -3,7 +3,14 @@
 Last updated: 2026-04-15
 
 ## 🎯 Current Task
-Sprint 2 Expandida iniciando. CEO mudou estratégia: de "validation gate 300 signups" para "comercialmente vendável desde o dia 1". 3 partes: A (Free Tier Robusto) → B (Ciclo de Venda) → C (Entrega do Valor Pago). Briefing em docs/briefings/cryptovision/BRIEFING-Sprint2-Expandida.md. Próximo: @pm atualizar PRD → @architect validar novos componentes → /plan-eng-review → @sm stories → @dev implementar.
+Sprint 2 Expandida — CEO Review CLEARED (SELECTIVE EXPANSION, 4 cherry-picks aceitos).
+19 stories total (15 original + 4 cherry-picks). Deploy incremental por Parte.
+
+**Próximo passo EXATO:** /plan-eng-review para Sprint 2 (eng review anterior é stale — Sprint 1 scope).
+Depois: @sm criar stories detalhadas → @dev implementar Parte A primeiro.
+
+**CEO Plan Sprint 2:** ~/.gstack/projects/.../ceo-plans/2026-04-15-cryptovision-sprint2-expanded.md
+**Briefing original:** docs/briefings/cryptovision/BRIEFING-Sprint2-Expandida.md
 
 ## ✅ Reviews Concluídos
 | Review | Status | Detalhes |
@@ -13,6 +20,7 @@ Sprint 2 Expandida iniciando. CEO mudou estratégia: de "validation gate 300 sig
 | /design-consultation | DONE | DESIGN.md 430+ linhas, preview HTML gerada |
 | /plan-eng-review | CLEARED | 7 issues, 4 ADRs adicionados (011-014), outside voice |
 | @ux-design-expert | DONE | 7/10, 3 HIGH corrigidos, DESIGN.md 10/10, anti-slop 6/6 |
+| /plan-ceo-review (Sprint 2) | CLEARED | SELECTIVE EXPANSION, 4 cherry-picks aceitos, 19 stories |
 
 ## ✅ Documentos Produzidos
 | Documento | Localização |
