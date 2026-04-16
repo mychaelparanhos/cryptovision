@@ -1,4 +1,15 @@
 import "dotenv/config";
+import * as Sentry from "@sentry/node";
+
+// Sentry must init before any other imports
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.NODE_ENV || "production",
+    tracesSampleRate: 1.0,
+  });
+}
+
 import { SUPPORTED_SYMBOLS } from "@cryptovision/shared";
 import { BinanceAdapter } from "./adapters/binance";
 import { Orchestrator } from "./services/orchestrator";
@@ -59,11 +70,13 @@ process.on("SIGINT", () => shutdown("SIGINT"));
 
 process.on("uncaughtException", (err) => {
   logger.error("Main", "Uncaught exception", err);
+  Sentry.captureException(err);
   shutdown("uncaughtException");
 });
 
 process.on("unhandledRejection", (err) => {
   logger.error("Main", "Unhandled rejection", err);
+  if (err instanceof Error) Sentry.captureException(err);
 });
 
 main().catch((err) => {

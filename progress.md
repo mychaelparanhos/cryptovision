@@ -1,16 +1,18 @@
 # Project State — CryptoVision SaaS
 
-Last updated: 2026-04-15
+Last updated: 2026-04-16
 
 ## 🎯 Current Task
-Sprint 2 Expandida — CEO Review CLEARED (SELECTIVE EXPANSION, 4 cherry-picks aceitos).
+Sprint 2 Expandida — ENG REVIEW CLEARED. 11 issues resolvidos, 0 unresolved.
 19 stories total (15 original + 4 cherry-picks). Deploy incremental por Parte.
 
-**Próximo passo EXATO:** /plan-eng-review para Sprint 2 (eng review anterior é stale — Sprint 1 scope).
-Depois: @sm criar stories detalhadas → @dev implementar Parte A primeiro.
+**Próximo passo EXATO:** @sm criar stories hiperdetalhadas para Parte A (5 stories).
+Depois: @dev implementar Parte A. Vitest setup + testes incluídos em cada story.
 
 **CEO Plan Sprint 2:** ~/.gstack/projects/.../ceo-plans/2026-04-15-cryptovision-sprint2-expanded.md
 **Briefing original:** docs/briefings/cryptovision/BRIEFING-Sprint2-Expandida.md
+**Design Doc:** ~/.gstack/projects/mychaelparanhos-cryptovision/mychaelparanhos-main-design-2026-04-16-sprint2-expanded.md
+**Test Plan:** ~/.gstack/projects/mychaelparanhos-cryptovision/mychaelparanhos-main-eng-review-test-plan-20260416-011436.md
 
 ## ✅ Reviews Concluídos
 | Review | Status | Detalhes |
@@ -18,9 +20,11 @@ Depois: @sm criar stories detalhadas → @dev implementar Parte A primeiro.
 | /plan-ceo-review | CLEARED | 6 propostas, 5 aceitas, 1 deferred (embeddable widget) |
 | /plan-design-review | CLEARED | 5/10 → 8/10, 15 decisões de design, 7 passes |
 | /design-consultation | DONE | DESIGN.md 430+ linhas, preview HTML gerada |
-| /plan-eng-review | CLEARED | 7 issues, 4 ADRs adicionados (011-014), outside voice |
+| /plan-eng-review (Sprint 1) | CLEARED | 7 issues, 4 ADRs adicionados (011-014), outside voice |
 | @ux-design-expert | DONE | 7/10, 3 HIGH corrigidos, DESIGN.md 10/10, anti-slop 6/6 |
 | /plan-ceo-review (Sprint 2) | CLEARED | SELECTIVE EXPANSION, 4 cherry-picks aceitos, 19 stories |
+| /office-hours (Sprint 2) | DONE | Design doc + persona Leo + premissas + alternatives |
+| /plan-eng-review (Sprint 2) | CLEARED | 11 issues, outside voice, full test coverage 38/38 |
 
 ## ✅ Documentos Produzidos
 | Documento | Localização |
@@ -83,7 +87,7 @@ Depois: @sm criar stories detalhadas → @dev implementar Parte A primeiro.
 | 008 | Railway separados (ingestion vs alerts) |
 | 009 | Canvas heatmap (não SVG/D3) |
 | 010 | Batch inserts 1s buffer |
-| 011 | SSE/WS próprio via Redis PUB/SUB (não Supabase Realtime) |
+| 011 | SSE via Redis PUB/SUB no Railway (não Vercel serverless, não Supabase Realtime) |
 | 012 | numeric/decimal para valores financeiros |
 | 013 | 1s OHLCV candles na ingestão (6M→1.7M rows/dia) |
 | 014 | ExchangeAdapter interface leve no Sprint 0 |
@@ -105,17 +109,32 @@ Depois: @sm criar stories detalhadas → @dev implementar Parte A primeiro.
 | Stripe | ⬜ Test mode | Products/prices pendentes |
 | Domínio | ⬜ Pendente | Não comprado |
 
+## 📋 Eng Review Decisions (Sprint 2, 2026-04-16)
+| # | Decision | Resolution |
+|---|----------|------------|
+| 1 | Stripe webhook idempotency | Redis event ID dedup (TTL 48h) → S2B-2 AC |
+| 2 | Publisher cache keys | Per-exchange + aggregated keys |
+| 3 | Middleware DRY | Single check against prefixes → S2B-1 |
+| 4 | Migration strategy | 1 migration per Parte |
+| 5 | Alert engine architecture | In-memory rule cache, 60s refresh |
+| 6 | Middleware route protection | DRY fix → S2B-1 |
+| 7 | Redis client singleton | Extract to lib/redis.ts |
+| 8 | Test coverage | Full 38/38 paths, Vitest + Playwright |
+| 9 | Redis MGET | Batch reads for dashboard |
+| 10 | SSE real-time | Move to Railway (Vercel can't SUBSCRIBE) |
+| 11 | Data partitioning | Monthly partitions in Parte A |
+
 ## ⚡ Próximo Passo Exato
-1. Comprar domínio (cryptovision.io ou similar)
-2. Conectar repo ao Vercel + configurar env vars
-3. Criar Upstash Redis instance
-4. Deploy production
-5. Thread de lançamento Crypto Twitter
-6. Monitorar waitlist (meta: 300 em 14 dias)
+1. @sm: criar stories hiperdetalhadas para Parte A (5 stories + partitioning)
+2. @dev: implementar Parte A (heatmap, funding, liqs feed, UX, Sentry)
+3. @sm paralelo: iniciar infra (domínio, Vercel, Upstash, Stripe verification, Sentry)
+4. Deploy Parte A → 7-day organic interest check
+5. Se positivo: @sm stories Parte B → @dev implementar
 
 ## 🚧 Blockers
 - Nenhum blocker técnico
 - Domínio não comprado
 - Vercel não conectado
-- Stripe em test mode
+- Stripe em test mode (business verification precisa iniciar Dia 1)
 - Resend sem domínio próprio (usando onboarding@resend.dev)
+- Upstash Redis não criado

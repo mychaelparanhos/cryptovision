@@ -1,21 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import type { Plan } from "@cryptovision/shared";
-
-let redis: Redis | null = null;
-
-function getRedis() {
-  if (!redis) {
-    if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-      return null;
-    }
-    redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
-  }
-  return redis;
-}
+import { getRedis } from "./redis";
 
 const LIMITS: Record<Exclude<Plan, "enterprise">, number> = {
   free: 100,

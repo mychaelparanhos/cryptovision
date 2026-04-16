@@ -28,6 +28,13 @@ export function Footer() {
           <Link href="/status" className="hover:text-[var(--text-secondary)] transition-colors">Status</Link>
         </div>
 
+        {/* Social + External */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-sm text-[var(--text-muted)]">
+          <a href="https://twitter.com/cryptovision" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--text-secondary)] transition-colors">Twitter/X</a>
+          <a href="https://discord.gg/cryptovision" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--text-secondary)] transition-colors">Discord</a>
+          <a href="https://github.com/mychaelparanhos/cryptovision" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--text-secondary)] transition-colors">GitHub</a>
+        </div>
+
         {/* Legal */}
         <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-[var(--text-muted)]">
           <Link href="/terms" className="hover:text-[var(--text-secondary)] transition-colors">Terms of Service</Link>
@@ -35,8 +42,11 @@ export function Footer() {
           <Link href="/disclaimer" className="hover:text-[var(--text-secondary)] transition-colors">Risk Disclaimer</Link>
         </div>
 
-        {/* Copyright */}
-        <p className="mt-8 text-center text-xs text-[var(--text-muted)]">
+        {/* Tagline + Copyright */}
+        <p className="mt-6 text-center text-xs text-[var(--text-muted)]">
+          Built for traders, by traders.
+        </p>
+        <p className="mt-2 text-center text-xs text-[var(--text-muted)]">
           © 2026 CryptoVision. All rights reserved. CryptoVision is not a
           financial advisor. Past data does not guarantee future results.
         </p>

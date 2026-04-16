@@ -6,12 +6,16 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.4",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
     "turbo": "^2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.4"
   }
 }

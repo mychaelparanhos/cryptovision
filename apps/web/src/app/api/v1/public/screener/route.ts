@@ -1,53 +1,66 @@
 import { NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
 import { SUPPORTED_SYMBOLS } from "@cryptovision/shared";
+import { getRedis } from "@/lib/redis";
 
 export async function GET() {
-  if (
-    !process.env.UPSTASH_REDIS_REST_URL ||
-    !process.env.UPSTASH_REDIS_REST_TOKEN
-  ) {
+  const redis = getRedis();
+
+  if (!redis) {
     return NextResponse.json(
-      { data: [], meta: { exchange: "consolidated", delayed: true, sources: [] } },
+      {
+        data: [],
+        meta: { exchange: "aggregated", delayed: true, sources: [] },
+      },
       { status: 200 }
     );
   }
 
-  const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  });
-
   const symbols = [...SUPPORTED_SYMBOLS];
+
+  // Batch read aggregated keys using MGET (1 call instead of N)
+  const fundingKeys = symbols.map((s) => `cv:cache:funding:agg:${s}`);
+  const oiKeys = symbols.map((s) => `cv:cache:oi:agg:${s}`);
+
   const [fundingResults, oiResults] = await Promise.all([
-    Promise.all(
-      symbols.map(async (s) => {
-        const d = await redis.get<string>(`cv:cache:funding:${s}`);
-        return d ? { symbol: s, type: "funding" as const, ...JSON.parse(d) } : null;
-      })
-    ),
-    Promise.all(
-      symbols.map(async (s) => {
-        const d = await redis.get<string>(`cv:cache:oi:${s}`);
-        return d ? { symbol: s, type: "oi" as const, ...JSON.parse(d) } : null;
-      })
-    ),
+    redis.mget<(string | null)[]>(...fundingKeys),
+    redis.mget<(string | null)[]>(...oiKeys),
   ]);
 
-  // Merge funding + OI data per symbol
-  const merged = symbols.map((symbol) => {
-    const funding = fundingResults.find((f) => f?.symbol === symbol);
-    const oi = oiResults.find((o) => o?.symbol === symbol);
-    return { symbol, funding: funding ?? null, oi: oi ?? null };
+  // Collect all exchange sources that contributed data
+  const allSources = new Set<string>();
+
+  const merged = symbols.map((symbol, i) => {
+    const rawFunding = fundingResults[i];
+    const rawOI = oiResults[i];
+
+    const funding = rawFunding
+      ? typeof rawFunding === "string"
+        ? JSON.parse(rawFunding)
+        : rawFunding
+      : null;
+    const oi = rawOI
+      ? typeof rawOI === "string"
+        ? JSON.parse(rawOI)
+        : rawOI
+      : null;
+
+    if (funding?.sources) {
+      for (const src of funding.sources) allSources.add(src);
+    }
+    if (oi?.sources) {
+      for (const src of oi.sources) allSources.add(src);
+    }
+
+    return { symbol, funding, oi };
   });
 
   return NextResponse.json({
     data: merged.filter((m) => m.funding || m.oi),
     meta: {
-      exchange: "consolidated",
+      exchange: "aggregated",
       delayed: true,
       timestamp: new Date().toISOString(),
-      sources: ["binance"],
+      sources: [...allSources],
     },
   });
 }

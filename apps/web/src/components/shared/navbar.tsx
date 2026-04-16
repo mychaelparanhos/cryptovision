@@ -1,6 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+
+const NAV_LINKS = [
+  { href: "#heatmap", label: "Heatmap", scroll: true },
+  { href: "#funding", label: "Funding", scroll: true },
+  { href: "/screener", label: "Screener", scroll: false },
+  { href: "#pricing", label: "Pricing", scroll: true },
+  { href: "#faq", label: "FAQ", scroll: true },
+];
 
 export function Navbar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -13,28 +26,88 @@ export function Navbar() {
           </span>
         </Link>
 
+        {/* Desktop links */}
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#features" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-            Features
-          </a>
-          <a href="#pricing" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-            Pricing
-          </a>
-          <Link href="/screener" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-            Screener
-          </Link>
-          <a href="#faq" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-            FAQ
-          </a>
+          {NAV_LINKS.map((link) =>
+            link.scroll ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-amber)] transition-colors"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-amber)] transition-colors"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
         </div>
 
-        <Link
-          href="/login"
-          className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-        >
-          Log in
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/login"
+            className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          >
+            Log in
+          </Link>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden flex flex-col gap-1.5 p-1"
+            aria-label="Toggle menu"
+          >
+            <span
+              className={`block h-0.5 w-5 bg-[var(--text-secondary)] transition-transform ${
+                mobileOpen ? "translate-y-2 rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-5 bg-[var(--text-secondary)] transition-opacity ${
+                mobileOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-5 bg-[var(--text-secondary)] transition-transform ${
+                mobileOpen ? "-translate-y-2 -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-[var(--border)] bg-[var(--bg)] px-6 py-4 space-y-3">
+          {NAV_LINKS.map((link) =>
+            link.scroll ? (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="block text-sm text-[var(--text-secondary)] hover:text-[var(--accent-amber)] transition-colors"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="block text-sm text-[var(--text-secondary)] hover:text-[var(--accent-amber)] transition-colors"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
+        </div>
+      )}
     </header>
   );
 }
