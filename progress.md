@@ -3,11 +3,10 @@
 Last updated: 2026-04-16
 
 ## 🎯 Current Task
-Sprint 2 Expandida — ENG REVIEW CLEARED. 11 issues resolvidos, 0 unresolved.
-19 stories total (15 original + 4 cherry-picks). Deploy incremental por Parte.
+Sprint 2 Expandida — COMPLETA. 20 stories implementadas, 108 testes passando.
+3 commits: Parte A (6d1663d) → Parte B (313902f) → Parte C (37fe4e6). Pushed to GitHub.
 
-**Próximo passo EXATO:** @sm criar stories hiperdetalhadas para Parte A (5 stories).
-Depois: @dev implementar Parte A. Vitest setup + testes incluídos em cada story.
+**Próximo passo EXATO:** Deploy para produção (Vercel + Railway + Upstash + Stripe).
 
 **CEO Plan Sprint 2:** ~/.gstack/projects/.../ceo-plans/2026-04-15-cryptovision-sprint2-expanded.md
 **Briefing original:** docs/briefings/cryptovision/BRIEFING-Sprint2-Expandida.md
@@ -95,8 +94,8 @@ Depois: @dev implementar Parte A. Vitest setup + testes incluídos em cada story
 ## 🌿 Git State
 - **Repo:** mychaelparanhos/cryptovision (GitHub, público)
 - **Branch:** main
-- **Commits:** 11 total
-- **Último commit:** feat: Sprint 1 complete
+- **Commits:** 16 total
+- **Último commit:** feat: Sprint 2C complete — Entrega do Valor Pago (6 stories)
 
 ## 🔧 Infraestrutura
 | Serviço | Status | Detalhes |
@@ -125,16 +124,19 @@ Depois: @dev implementar Parte A. Vitest setup + testes incluídos em cada story
 | 11 | Data partitioning | Monthly partitions in Parte A |
 
 ## ⚡ Próximo Passo Exato
-1. @sm: criar stories hiperdetalhadas para Parte A (5 stories + partitioning)
-2. @dev: implementar Parte A (heatmap, funding, liqs feed, UX, Sentry)
-3. @sm paralelo: iniciar infra (domínio, Vercel, Upstash, Stripe verification, Sentry)
-4. Deploy Parte A → 7-day organic interest check
-5. Se positivo: @sm stories Parte B → @dev implementar
+1. Comprar domínio (cryptovision.io ou similar)
+2. Conectar repo ao Vercel + configurar env vars
+3. Criar Upstash Redis instance
+4. Criar Sentry project
+5. Iniciar Stripe business verification + criar products/prices
+6. Criar Telegram bot (@CryptoVisionBot)
+7. Configurar Resend com domínio próprio
+8. Deploy production (Vercel web + Railway workers)
+9. Thread de lançamento Crypto Twitter
+10. Monitor 7-day organic interest
 
 ## 🚧 Blockers
-- Nenhum blocker técnico
-- Domínio não comprado
-- Vercel não conectado
-- Stripe em test mode (business verification precisa iniciar Dia 1)
-- Resend sem domínio próprio (usando onboarding@resend.dev)
-- Upstash Redis não criado
+- Nenhum blocker de código
+- Infra precisa ser provisionada (Vercel, Upstash, Stripe products, Sentry, Telegram bot, domínio)
+- Stripe business verification pode demorar 2-3 dias
+- DATABASE_URL no .env precisa da senha correta pra conexão do app
